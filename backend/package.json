@@ -1,0 +1,30 @@
+{
+  "name": "jilitodov1",
+  "version": "1.0.0",
+  "description": "jilitodo api",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hopp-Murithi/jilitodov1.git"
+  },
+  "author": "Hopp Murithi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hopp-Murithi/jilitodov1/issues"
+  },
+  "homepage": "https://github.com/Hopp-Murithi/jilitodov1#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "knex": "^3.0.1",
+    "lodash": "^4.17.21",
+    "pg": "^8.11.3",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
