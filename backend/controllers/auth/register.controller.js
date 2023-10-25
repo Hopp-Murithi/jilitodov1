@@ -1,5 +1,13 @@
 const { validationResult,check } = require("express-validator");
 
+
+/**
+ * 
+ * @param {*} req request body object
+ * @param {*} res response body object
+ * @returns success true, false if errored
+ */
+
 const registerUser = (req, res) => {
   try {
     /**
