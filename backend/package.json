@@ -22,9 +22,11 @@
   },
   "homepage": "https://github.com/Hopp-Murithi/jilitodov1#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
     "knex": "^3.0.1",
     "lodash": "^4.17.21",
     "pg": "^8.11.3",
