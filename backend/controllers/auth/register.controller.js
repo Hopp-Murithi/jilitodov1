@@ -1,44 +1,33 @@
-const { validationResult,check } = require("express-validator");
-
+const { CatchAsyncErrors } = require("../../helpers/catchAsyncErrors.helper");
+const { hashPassword, createAuthCookie } = require("../../helpers/auth.helper");
 
 /**
- * 
+ *
  * @param {*} req request body object
  * @param {*} res response body object
  * @returns success true, false if errored
  */
 
-const registerUser = (req, res) => {
-  try {
-    /**
-     * destructure user properties
-     */
-    const { firstName, lastName, email, password, confirmPassword } = req.body;
+const registerUser = CatchAsyncErrors(async (req, res, next) => {
+  /**
+   * destructure user properties
+   */
+  let { firstName, lastName, email, password} = req.body;
 
-    /**
-     * validate user properties
-     */
-    check(firstName, "First name is required").notEmpty();
-    check(lastName, "Last Name is required").notEmpty();
-    check(email, "Email is required").notEmpty();
+  /**
+   * hash password*/
+  password = await hashPassword(password);
 
+  createAuthCookie(res, {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+  });
 
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: "User registered successfully",
-    });
-  } catch (error) {
-    return res.status(201).json({
-      success: false,
-      message: "Internal server error",
-    });
-  }
-};
+  return res.status(200).json({
+    success: true,
+    message: "User registered successfully",
+  });
+});
 
 module.exports = { registerUser };
