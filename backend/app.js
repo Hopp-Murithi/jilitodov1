@@ -11,6 +11,11 @@ const swaggerUi = require("./swagger.json");
 const { db_middleware } = require("./middlewares/db_middleware");
 
 /**
+ * require error-middleware for error mounting
+ */
+const {error_middleware} = require("./middlewares/error_middleware");
+
+/**
  * configure application url
  */
 const baseurl = "/api/jilitodo";
@@ -36,6 +41,8 @@ app.use(express.urlencoded({ extended: true }));
  */
 
 app.use(db_middleware);
+app.use(error_middleware);
+
 
 /**
  * mount swagger
