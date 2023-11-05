@@ -29,6 +29,15 @@ const error_middleware = (err, req, res, next) => {
     if (err.name === "TokenExpiredError") {
       error = new ErrorHandler("Token is expired. Kindly login", 400);
     }
+    /**
+     * DB ERRORs
+     * Unique check
+     * */
+    if(new RegExp(/unique/i).test(err["routine"].toLowerCase())){
+      error = new ErrorHandler("Duplicate entries detected",409);
+    }
+
+
     res.status(err.statusCode).json({
       success: false,
       message: error.message || "Internal server error",
