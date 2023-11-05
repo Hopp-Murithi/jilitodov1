@@ -12,7 +12,7 @@ process.on("uncaughtException", (err) => {
  * instantiate server
  */
 const server = app.listen(process.env.NODE_PORT, () => {
- console.clear();
+  console.clear();
   console.log(
     `Server started on PORT: ${process.env.NODE_PORT} in ${process.env.NODE_ENV} mode`
   );
