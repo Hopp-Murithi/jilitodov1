@@ -1,6 +1,6 @@
 const { CatchAsyncErrors } = require("../../helpers/catchAsyncErrors.helper");
 const { hashPassword, createAuthCookie } = require("../../helpers/auth.helper");
-
+const {responseHelper} =require("../../helpers/responseHelper")
 /**
  *
  * @param {*} req request body object
@@ -15,19 +15,31 @@ const registerUser = CatchAsyncErrors(async (req, res, next) => {
   let { firstName, lastName, email, password} = req.body;
 
   /**
+   * check if User exists
+   * */
+  const userExists = await req.db_context.exec("findUser",[email]);
+
+  if(userExists != null) return responseHelper(res,409,false,"Email already in use")
+
+  /**
    * hash password*/
   password = await hashPassword(password);
+
+  /**
+   * Save new validated user to db
+   * */
+  const saveNewUser= await req.db_context.exec("UserSave",[
+    firstName, lastName, email, password
+  ])
 
   createAuthCookie(res, {
     firstName: firstName,
     lastName: lastName,
     email: email,
+    userid: saveNewUser["userid"],
   });
 
-  return res.status(200).json({
-    success: true,
-    message: "User registered successfully",
-  });
+  return responseHelper(res,200,true,"User has been registered successfully")
 });
 
 module.exports = { registerUser };
