@@ -36,7 +36,12 @@ const error_middleware = (err, req, res, next) => {
     if(new RegExp(/unique/i).test(err["routine"].toLowerCase())){
       error = new ErrorHandler("Duplicate entries detected",409);
     }
-
+/**
+ *Catch wrong column reference error based on postgres status code
+ * */
+    if (err.code === "42703") {
+      error = new ErrorHandler("Invalid column name in the query", 400);
+    }
 
     res.status(err.statusCode).json({
       success: false,
