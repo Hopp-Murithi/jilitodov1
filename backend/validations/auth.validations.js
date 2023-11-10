@@ -1,5 +1,9 @@
 const { check } = require("express-validator");
 const authValidations = {
+
+  /**
+   * Check user input to register
+   * */
   registration: [
     check("firstName", "Firstname is required").notEmpty().trim(),
     check("lastName", "Lastname is required").notEmpty().trim(),
@@ -18,6 +22,9 @@ const authValidations = {
       (value, { req }) => value === req.body.password,
     ),
   ],
+  /**
+   * Check user input to register
+   * */
   login :[
       check("email","Email is required").notEmpty(),
       check("email","Enter a valid email").notEmpty().normalizeEmail(),

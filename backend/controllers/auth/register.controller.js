@@ -12,7 +12,7 @@ const {responseHelper} = require("../../helpers/responseHelper")
  * @returns success true, false if errored
  */
 
-const registerUser = CatchAsyncErrors(async (req, res, next) => {
+const registerUser = CatchAsyncErrors(async (req, res) => {
     /**
      * destructure user properties
      */
@@ -52,14 +52,12 @@ const registerUser = CatchAsyncErrors(async (req, res, next) => {
  * @param {*} res res body object
  * @returns success true, false if it errored
  * */
-const loginUser = CatchAsyncErrors(async (req, res, next) => {
+const loginUser = CatchAsyncErrors(async (req, res) => {
     let {email, password} = req.body;
     /**
      * check if User exists by email
      * */
-    /**
-     * check if user exists
-     */
+
     const userExists = await req.db_context.search("Users", {
         email: email,
     });
@@ -100,7 +98,7 @@ const loginUser = CatchAsyncErrors(async (req, res, next) => {
 /**
  * logout User
  * */
-const logOutUser = CatchAsyncErrors(async (req, res, next) => {
+const logOutUser = CatchAsyncErrors(async (req, res) => {
     res.cookie("cookie",
         null,
         {

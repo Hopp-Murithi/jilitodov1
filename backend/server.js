@@ -1,7 +1,9 @@
 require("dotenv").config();
 const app = require("./app");
 
-//Handle uncaught exceptions
+/**
+ * Handle uncaught exceptions
+ * */
 process.on("uncaughtException", (err) => {
   console.log(`Error: ${err.message}`);
   console.log("Shutting down due to uncaught exception");
@@ -19,7 +21,9 @@ const server = app.listen(process.env.NODE_PORT, () => {
 });
 
 
-//Handle Unhandled Promise Rejections
+/**
+ * Handle unhandled rejection
+ * */
 process.on("unhandledRejection", (err) => {
   console.log(`Error: ${err}`);
   console.log("Shutting down the server due to unhandled promise rejection");
