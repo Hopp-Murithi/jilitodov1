@@ -56,7 +56,7 @@ This is a feature-rich, secure, and scalable Node.js todo application built with
     npm start
     ```
 
-## WORK STILL IN PROGRESS
+
 ## Usage
 
 - Visit `http://localhost:3000` in your web browser.
@@ -78,3 +78,5 @@ If you encounter a bug or issue with the application, please consider the follow
 - Include detailed steps to reproduce the bug.
 - Mention the expected behavior and the actual behavior.
 - Include any error messages or logs if applicable.
+
+## WORK STILL IN PROGRESS
