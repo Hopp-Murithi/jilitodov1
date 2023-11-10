@@ -15,5 +15,12 @@ const hashPassword = (rawPassword) => {
       httpOnly: true,
     });
   };
+
+  /**
+   * check password login
+   * */
+  const checkPassword = (submittedPassword,dbHashedPassword)=>{
+    return bcrypt.compareSync(submittedPassword,dbHashedPassword)
+  }
   
-  module.exports = { hashPassword, createAuthCookie };
+  module.exports = { hashPassword, createAuthCookie, checkPassword };
