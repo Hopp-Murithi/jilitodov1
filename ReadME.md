@@ -6,7 +6,7 @@
 ![Express Validator](https://img.shields.io/badge/Express%20Validator-6.9+-purple.svg)
 ![NextJs](https://img.shields.io/badge/next-v14-blue.svg)
 
-This is a feature-rich, secure, and scalable Node.js todo application built with Express and Knex, complete with user authentication using cookies and role-based access control. It allows you to create, manage, and organize your tasks efficiently, all within a responsive web application. The frontend is developed using Angular v17, making use of the latest Angular features, including signals.
+This is a feature-rich, secure, and scalable Node.js todo application built with Express and Knex, complete with user authentication using cookies and role-based access control. It allows you to create, manage, and organize your tasks efficiently, all within a responsive web application. The frontend is developed using Nextjs v14 making use of its latest features.
 
 ## Table of Contents
 
