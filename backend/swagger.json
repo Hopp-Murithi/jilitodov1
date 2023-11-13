@@ -1,36 +1,124 @@
 {
-    "openapi": "3.0.3",
-    "info": {
-      "title": "JiliTodo Api",
-      "description": "JiliTodo Api",
-      "version": "1.0.0"
-    },
-    "servers": [
-      {
-        "url": "http://localhost:4526/api/jilitodo/"
+  "openapi": "3.0.3",
+  "info": {
+    "title": "JiliTodo Api",
+    "description": "JiliTodo Api",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4526/api/jilitodo/"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Check JiliTodo Api health",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthErrorResponse"
+                }
+              }
+            }
+          }
+        }
       }
-    ],
-    "paths": {
-      "/health": {
-        "get": {
-          "summary": "Check JiliTodo Api health",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json":{
-                  "schema": {
-                    "$ref": "#/components/schemas/HealthSuccessResponse"
+    },
+    "/auth/user/register": {
+      "post": {
+        "summary": "Register a new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstname": {
+                    "type": "string",
+                    "example": "John"
+                  },
+                  "lastname": {
+                    "type": "string",
+                    "example": "Doe"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "john.doe@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "securepassword"
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "example": "securepassword"
                   }
+                },
+                "required": ["firstname", "lastname", "email", "password", "confirmPassword"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User registered successfully",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Authorization cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "authorization=Bearer <token>"
                 }
               }
             },
-            "400": {
-              "description": "Error",
-              "content": {
-                "application/json":{
-                  "schema": {
-                    "$ref": "#/components/schemas/HealthErrorResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User has been saved successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error or user already registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation error message or User already registered"
+                    }
                   }
                 }
               }
@@ -39,34 +127,169 @@
         }
       }
     },
-    "components": {
-      "schemas": {
-        "HealthSuccessResponse": {
-          "type": "object",
-          "properties": {
-            "success": {
-              "type": "boolean",
-              "example": true
-            },
-            "message": {
-              "type": "string",
-              "example": "JiliTodo Api is healthy"
+    "/auth/user/login": {
+      "post": {
+        "summary": "Login with email and password",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "john.doe@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "securepassword"
+                  }
+                },
+                "required": ["email", "password"]
+              }
             }
           }
         },
-        "HealthErrorResponse": {
-          "type": "object",
-          "properties": {
-            "success": {
-              "type": "boolean",
-              "example": false
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Authorization cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "authorization=Bearer <token>"
+                }
+              }
             },
-            "message": {
-              "type": "string",
-              "example": "JiliTodo Api is down"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Welcome back"
+                    },
+                    "userData": {
+                      "type": "object",
+                      "properties": {
+                        "firstname": {
+                          "type": "string",
+                          "example": "John"
+                        },
+                        "lastname": {
+                          "type": "string",
+                          "example": "Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "john.doe@example.com"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "example": "12345"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email or password is wrong. Try again!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/user/logout": {
+      "post": {
+        "summary": "Logout",
+        "responses": {
+          "200": {
+            "description": "Logout successful",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Clears the authorization cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "authorization=; Max-Age=0; Path=/"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Logout successful"
+                    }
+                  }
+                }
+              }
             }
           }
         }
       }
     }
+  },
+  "components": {
+    "schemas": {
+      "HealthSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "JiliTodo Api is healthy"
+          }
+        }
+      },
+      "HealthErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "message": {
+            "type": "string",
+            "example": "JiliTodo Api is down"
+          }
+        }
+      }
+    }
   }
+}
